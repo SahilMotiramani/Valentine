@@ -129,6 +129,21 @@ button {
 </div>
 
 <script>
+    // Handle browser back button
+window.addEventListener("popstate", () => {
+  // Stop music
+  music.pause();
+  music.currentTime = 0;
+
+  // Reset UI
+  successCard.style.display = "none";
+  questionCard.style.display = "block";
+});
+window.addEventListener("beforeunload", () => {
+  music.pause();
+  music.currentTime = 0;
+});
+
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 const questionCard = document.getElementById("questionCard");
@@ -152,11 +167,17 @@ function moveNo() {
 
 /* YES click */
 yesBtn.addEventListener("click", () => {
+  // Save state so back button works
+  history.pushState({ page: "success" }, "", "");
+
   questionCard.style.display = "none";
   successCard.style.display = "block";
-  launchConfetti();
+
+  music.currentTime = 0;
   music.play();
+  launchConfetti();
 });
+
 
 /* Confetti generator */
 function launchConfetti() {
