@@ -39,7 +39,7 @@ h1 {
 
 .buttons {
   position: relative;
-  height: 90px;
+  height: 120px;
 }
 
 button {
@@ -58,8 +58,7 @@ button {
 }
 
 #noBtn {
-  background: #bbb;
-  right: 10%;
+  position: absolute;
 }
 
 /* Success screen */
@@ -160,10 +159,20 @@ noBtn.addEventListener("mouseenter", moveNo);
 noBtn.addEventListener("touchstart", moveNo);
 
 function moveNo() {
-  const x = Math.random() * 200 - 100;
-  const y = Math.random() * 120 - 60;
-  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  const card = document.querySelector(".card");
+  const cardRect = card.getBoundingClientRect();
+  const noRect = noBtn.getBoundingClientRect();
+
+  const maxX = cardRect.width - noRect.width - 20;
+  const maxY = cardRect.height - noRect.height - 20;
+
+  const randomX = Math.random() * maxX;
+  const randomY = Math.random() * maxY;
+
+  noBtn.style.left = randomX + "px";
+  noBtn.style.top = randomY + "px";
 }
+
 
 /* YES click */
 yesBtn.addEventListener("click", () => {
